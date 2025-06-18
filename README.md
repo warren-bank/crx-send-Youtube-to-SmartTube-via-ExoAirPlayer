@@ -1,4 +1,4 @@
-### [send Youtube to SmartTube via ExoAirPlayer](https://github.com/warren-bank/crx-send-Youtube-to-SmartTube-via-ExoAirPlayer/tree/webmonkey-userscript/es5)
+### [Youtube: send video to SmartTube via ExoAirPlayer](https://github.com/warren-bank/crx-send-Youtube-to-SmartTube-via-ExoAirPlayer/tree/webmonkey-userscript/es5)
 
 [Userscript](https://github.com/warren-bank/crx-send-Youtube-to-SmartTube-via-ExoAirPlayer/raw/webmonkey-userscript/es5/webmonkey-userscript/send-Youtube-to-SmartTube-via-ExoAirPlayer.user.js) to run in:
 * the [WebMonkey](https://github.com/warren-bank/Android-WebMonkey) application
