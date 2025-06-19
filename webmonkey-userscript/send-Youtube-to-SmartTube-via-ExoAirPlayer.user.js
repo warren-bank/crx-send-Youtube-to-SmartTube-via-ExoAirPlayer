@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Youtube: send video to SmartTube via ExoAirPlayer
 // @description  Add button to video player that sends the video to SmartTube. In WebMonkey, optionally start an implicit Intent on the local device. Otherwise, start an explicit Intent on a remote device via ExoAirPlayer HTTP API.
-// @version      1.0.1
+// @version      1.0.2
 // @match        *://*.youtube.com/watch?v=*
 // @match        *://*.youtube.com/embed/*
 // @icon         https://www.youtube.com/favicon.ico
@@ -39,7 +39,7 @@ var constants = {
     userscripts_row_container: "userscripts-row"
   },
   button_text: {
-    send_video_to_smarttube: "Sent to SmartTube"
+    send_video_to_smarttube: "Send to SmartTube"
   },
   inline_css: {
     userscripts_row_container: "position: relative; top: 0; left: 0; overflow: visible;",
