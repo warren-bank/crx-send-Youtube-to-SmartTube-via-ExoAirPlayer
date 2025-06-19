@@ -27,6 +27,11 @@ Its purpose is to:
     * runs in WebMonkey
     * is configured to start a local implicit Intent
 
+#### Issues:
+
+* [Browser security blocks mixed content XHR from HTTPS pages to HTTP API endpoints](https://github.com/warren-bank/Android-ExoPlayer-AirPlay-Receiver/issues/15)
+  - describes browser-specific configuration for workarounds
+
 #### Easter Egg:
 
 * the [`./bin`](./bin) directory contains command-line scripts that serve the same purpose

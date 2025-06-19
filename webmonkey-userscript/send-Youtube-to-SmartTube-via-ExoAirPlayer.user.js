@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Youtube: send video to SmartTube via ExoAirPlayer
 // @description  Add button to video player that sends the video to SmartTube. In WebMonkey, optionally start an implicit Intent on the local device. Otherwise, start an explicit Intent on a remote device via ExoAirPlayer HTTP API.
-// @version      1.0.2
+// @version      1.1.0
 // @match        *://*.youtube.com/watch?v=*
 // @match        *://*.youtube.com/embed/*
 // @icon         https://www.youtube.com/favicon.ico
@@ -19,6 +19,11 @@
 // ----------------------------------------------------------------------------- user options
 
 var user_options = {
+  "common": {
+    "post_intent_redirect_to_url": function(local_intent) {
+      return local_intent ? "about:blank" : null
+    }
+  },
   "ExoAirPlayer": {
     "default_ip":   "192.168.0.3",
     "default_port": "8192"
@@ -82,15 +87,53 @@ var cancel_event = function(event) {
   event.stopPropagation();event.stopImmediatePropagation();event.preventDefault();event.returnValue=false;
 }
 
+// ----------------------------------------------------------------------------- URL handlers
+
+var redirect_to_url = function(url) {
+  if (!url) return
+
+  if (typeof GM_loadUrl === 'function') {
+    if (typeof GM_resolveUrl === 'function')
+      url = GM_resolveUrl(url, unsafeWindow.location.href) || url
+
+    GM_loadUrl(url, 'Referer', unsafeWindow.location.href)
+  }
+  else {
+    try {
+      unsafeWindow.top.location = url
+    }
+    catch(e) {
+      unsafeWindow.window.location = url
+    }
+  }
+}
+
+var process_post_intent_redirect_to_url = function(local_intent) {
+  var url = null
+
+  if (typeof user_options.common.post_intent_redirect_to_url === 'string')
+    url = user_options.common.post_intent_redirect_to_url
+
+  if (typeof user_options.common.post_intent_redirect_to_url === 'function')
+    url = user_options.common.post_intent_redirect_to_url(local_intent)
+
+  if (typeof url === 'string')
+    redirect_to_url(url)
+}
+
 // ----------------------------------------------------------------------------- utils
 
 var send_video_to_smarttube = function(event) {
   cancel_event(event)
 
-  if ((typeof GM_startIntent === 'function') && user_options.WebMonkey.start_local_intent)
+  var local_intent = ((typeof GM_startIntent === 'function') && user_options.WebMonkey.start_local_intent)
+
+  if (local_intent)
     send_video_to_smarttube_via_webmonkey()
   else
     send_video_to_smarttube_via_exoairplayer()
+
+  process_post_intent_redirect_to_url(local_intent)
 }
 
 var send_video_to_smarttube_via_webmonkey = function() {
