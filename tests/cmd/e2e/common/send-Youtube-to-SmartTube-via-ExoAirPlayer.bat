@@ -28,7 +28,8 @@ if "%port%"=="" (
 ) else (
   set host=%host%:%port%
 )
-
-curl "http://%host%/start-activity" -X "POST" -H "Content-Type: text/parameters" --data-binary "package: com.teamsmart.videomanager.tv!CR!class: com.liskovsoft.smartyoutubetv2.tv.ui.main.SplashActivity!CR!data: https://www.youtube.com/watch?v=%video%!CR!action: android.intent.action.VIEW!CR!category: android.intent.category.DEFAULT!CR!category: android.intent.category.BROWSABLE!CR!flag: 0x10000000!CR!flag: 0x00008000"
+if not "%video%"=="" (
+  curl "http://%host%/start-activity" -X "POST" -H "Content-Type: text/parameters" --data-binary "package: %smarttube_package%!CR!class: %smarttube_class%!CR!data: https://www.youtube.com/watch?v=%video%!CR!action: android.intent.action.VIEW!CR!category: android.intent.category.DEFAULT!CR!category: android.intent.category.BROWSABLE!CR!flag: 0x10000000!CR!flag: 0x00008000"
+)
 
 endlocal
